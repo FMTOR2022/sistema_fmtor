@@ -1,0 +1,75 @@
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-body: #212121;
+        --background-aux: #2B2B2B;
+        --background-aux-05: rgba(37, 39, 41, 0.5);
+        --background-button:#5AB3F0;
+
+        --background-red-main: #F2B8B5;
+        --color-red-main: #964b19;
+        --background-red-hover: #f89a95;
+        --color-red-hover: #B3261E;
+
+        --background-orange-main: #e9b07a;
+        --color-orange-main: #a8401d;
+        --background-orange-hover: #fcd7ae;
+        --color-orange-hover: #F4511E;
+
+        --background-yellow-main: #eed17a;
+        --color-yellow-main: #584301;
+        --background-yellow-hover: #ffecb4;
+        --color-yellow-hover: #423202;
+
+        --background-green-main: #81C995;
+        --color-green-main: #282E2D;
+        --background-green-hover: #b8f8ca;
+        --color-green-hover: #212325;
+
+        --color-button: #02203A;
+        --color-text: #FFFFFF;
+        
+        --color-logo: #FFFFFF;
+
+        --border-color: #36393f;
+
+        --login: rgba(9, 96, 167, 0.8);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --background-body: #FFFFFF;
+        --background-aux: #F1F5FB;
+        --background-aux-05: rgba(241, 245, 251,0.5);
+        --background-button:#C2E7FF;
+
+        --background-red-main: #B3261E;
+        --color-red-main: #FBF6F5;
+        --background-red-hover: #f89a95;
+        --color-red-hover: #B3261E;
+        
+        --background-orange-main: #F4511E;
+        --color-orange-main: #EEF3FB;
+        --background-orange-hover: #fcc0ae;
+        --color-orange-hover: #F4511E;
+
+        --background-yellow-main: #EDB303;
+        --color-yellow-main: #413205;
+        --background-yellow-hover: #ffecb4;
+        --color-yellow-hover: #413205;
+
+        --background-green-main: #81C995;
+        --color-green-main: #212325;
+        --background-green-hover: #b8f8ca;
+        --color-green-hover: #212325;
+
+        --color-logo: #014975;
+
+        --color-button: #001D35;
+        --color-text: #383838;
+        
+        --border-color: #EFEFEF;
+
+        --login: rgba(9, 96, 167, 0.8);
+    }
+}

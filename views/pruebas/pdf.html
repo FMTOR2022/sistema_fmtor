@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba</title>
+</head>
+<body>
+    <button class="getPDF">GENERAR PDF</button>
+    <script src="../../public/js/fmtor_libreria.js"></script>
+    <script>
+
+        if (document.getElementsByClassName('getPDF')) {
+            const btn = document.getElementsByClassName('getPDF');
+            btn[0].addEventListener('click', () => {
+                printPage('http://localhost/sistema_fmtor/public/pdf/control.php')          
+            });
+        }
+    </script>
+</body>
+</html>

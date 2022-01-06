@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../public/css/default.css">
+    <link rel="stylesheet" href="../../public/css/tema_automatico.css">
+</head>
+<body>
+    <div class="d-grid g2-6-4 grid-gap-0 height-100 login">
+        <div class="tarjeta-transparente d-flex align-content-center width-100">
+            <div class="empresa width-100 d-flex align-content-center flex-wrap"><video src="../../public/img/planta4.mp4" autoplay muted loop></video>
+                <h1>Forjadora Mexicana de Tornillos</h1>
+                <h2>S.A. de C.V.</h2>
+                <button id="iniciar" class="btn width-100">Iniciar</button>
+            </div>
+        </div>
+        <div class="tarjeta-transparente d-flex form-login">
+                <h1>Iniciar Sesión</h1>
+                <form id="form-login" class="d-grid g-1 f-login  grid-gap-0">
+                    <div class="d-flex flex-column">
+                        <label for="nombre_usuario">Nombre de usuario:</label>
+                        <input id="nombre_usuario" name="nombre_usuario" class="" type="text"
+                            placeholder="Ingresa el nombre de usuario">
+                        <label for="password">Contraseña:</label>
+                        <input id="password" name="password" class="" type="password" placeholder="Ingresa la contraseña de acceso">
+                    </div>
+                    <div class="options d-grid g-1 grid-gap-0">
+                        <!-- <input type="checkbox" name="remember" id="remember">
+                        <label for="remember" class="lbl-checkbox">Recordar contraseña</label> -->
+                        <button class="btn">Ingresar</button>
+                        <a class="btn btn-transparent-0 txt-center" href="">¿Olvidaste tu contraseña?</a>
+                    </div>
+                </form>
+            </div>
+    </div>
+    <script src="../../public/js/login.js"></script>
+    <script src="../../public/js/fmtor_libreria.js"></script>
+</body>
+</html>
