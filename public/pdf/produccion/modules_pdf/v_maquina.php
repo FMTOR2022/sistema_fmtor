@@ -27,49 +27,78 @@
             $dia_semana = date('l', strtotime($fecha));
             if ($dia_semana == 'Saturday' || $i == $total_dias) {
                 $aux[] = $i;
+                if (count($aux) == 1) {
+                    $aux[] = $i;
+                }
                 $limite_semanas[] = $aux;
                 $aux = array();
-            }
-    
-            if ($dia_semana == 'Sunday' || $i == 1) {
+            } else if ($dia_semana == 'Sunday' || $i == 1) {
                 $aux[] = $i;
             }
         }
     
+        $turno_anterior = '';
+        $fecha_anterior = '';
+        $aux = array();
+        $aux_observaciones = array();
+        for ($c_aux=0; $c_aux < $cantidad_de_maquinas; $c_aux++) { 
+            $aux[] = 0;
+            $aux_observaciones[] = 0;
+        }
+        $turnos = array();
+        
         for ($j=0; $j < count($data); $j++) { 
-            if ($contador_maquinas < $cantidad_de_maquinas) {
-                if (array_key_exists('kilos', $data[$j])) {
-                    $aux[] = $data[$j]['kilos'];
-                } else if (array_key_exists('pzas', $data[$j])) {
-                    $aux[] = $data[$j]['pzas'];
+            if (($turno_anterior == '' || $turno_anterior == $data[$j]['turno']) && ($fecha_anterior == '' || $fecha_anterior == $data[$j]['fecha'])) {
+                if (array_key_exists('kilos',$data[$j])) {
+                    $aux[$data[$j]['no_maquina']-1] = $data[$j]['kilos'];
+                } else if (array_key_exists('pzas',$data[$j])) {
+                    $aux[$data[$j]['no_maquina']-1] = $data[$j]['pzas'];
                 }
-                $observaciones[] = str_replace (' ' , '_', $data[$j]['observaciones']);
-                $contador_maquinas++;
-            } else if ($contador_maquinas == $cantidad_de_maquinas) {
-                if (array_key_exists('kilos', $data[$j])) {
-                    $aux[] = $data[$j]['kilos'];
-                } else if (array_key_exists('pzas', $data[$j])) {
-                    $aux[] = $data[$j]['pzas'];
-                }
-                $observaciones[] = str_replace (' ' , '_', $data[$j]['observaciones']);
-                $aux[] = $data[$j]['fecha'];
-                $semanas[] = $aux;
+                
+                $turno_anterior = $data[$j]['turno'];
+                $fecha_anterior = $data[$j]['fecha'];
+                $a = str_replace (' ' , '_', $data[$j]['observaciones']);
+                $aux_observaciones[$data[$j]['no_maquina']-1] = $a;
+            } else if (($turno_anterior != $data[$j]['turno']) || ($fecha_anterior != $data[$j]['fecha'])) {
+                $aux[] = $fecha_anterior;
+                $aux[] = $turno_anterior;
+                $turnos[] = $aux;
+                $observaciones[] = $aux_observaciones;
+
+                $turno_anterior = $data[$j]['turno'];
+                $fecha_anterior = $data[$j]['fecha'];
                 $aux = array();
-                $contador_maquinas=1;
+                $aux_observaciones = array();
+                for ($c_aux=0; $c_aux < $cantidad_de_maquinas; $c_aux++) { 
+                    $aux[] = 0;
+                    $aux_observaciones[] = 0;
+                }
+
+                if (array_key_exists('kilos',$data[$j])) {
+                    $aux[$data[$j]['no_maquina']-1] = $data[$j]['kilos'];
+                } else if (array_key_exists('pzas',$data[$j])) {
+                    $aux[$data[$j]['no_maquina']-1] = $data[$j]['pzas'];
+                }
+                $a = str_replace (' ' , '_', $data[$j]['observaciones']);
+                $aux_observaciones[$data[$j]['no_maquina']-1] = $a;
             }
         }
+        $observaciones[] = $aux_observaciones;
+        $aux[] = $fecha_anterior;
+        $aux[] = $turno_anterior;
+        $turnos[] = $aux;
         
         for ($i=0; $i < count($limite_semanas); $i++) { 
             echo '<tr><td class="txt-center" colspan="14">SEMANA '.($i+1).'</td></tr>';
-            for ($k=0; $k < count($semanas); $k++) {
-                $dia_registro = explode('-',$semanas[$k][count($semanas[$k])-1]);
+            for ($k=0; $k < count($turnos); $k++) {
+                $dia_registro = explode('-',$turnos[$k][count($turnos[$k])-2]);
                 if ($dia_registro[2] >= $limite_semanas[$i][0] && $dia_registro[2] <= $limite_semanas[$i][1]) {
-                    echo '<tr><td>'.$semanas[$k][count($semanas[$k])-1].'</td>';
-                    for ($j=0; $j < (count($semanas[$k])-1); $j++) { 
-                        echo '<td class="'.$observaciones[$contador_observaciones].' txt-center">'.$semanas[$k][$j].'</td>';
-                        $total_dia += $semanas[$k][$j];
-                        $total_anterior += $semanas[$k][$j];
-                        $total_maquina[$j] += $semanas[$k][$j];
+                    echo '<tr><td>'.$turnos[$k][count($turnos[$k])-2].'</td>';
+                    for ($j=0; $j < (count($turnos[$k])-2); $j++) { 
+                        echo '<td class="'.$observaciones[$k][$j].' txt-center">'.$turnos[$k][$j].'</td>';
+                        $total_dia += $turnos[$k][$j];
+                        $total_anterior += $turnos[$k][$j];
+                        $total_maquina[$j] += $turnos[$k][$j];
                         $contador_observaciones++;
                     }
                     $total_maquina[count($total_maquina)-2] += $total_dia;
@@ -101,6 +130,3 @@
     } else {
         echo '<td class="txt-center" colspan="'.($cant_th+5).'">Sin registros</td>';
     }
-
-
-?>

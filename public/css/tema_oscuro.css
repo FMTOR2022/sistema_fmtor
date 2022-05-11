@@ -1,6 +1,6 @@
 :root {
-    --background-body: #212121;
-    --background-aux: #2B2B2B;
+    --background-body: #15141A;
+    --background-aux: #23222A;
     --background-aux-05: rgba(37, 39, 41, 0.5);
     --background-button:#5AB3F0;
 
@@ -32,4 +32,26 @@
     --border-color: #36393f;
 
     --login: rgba(9, 96, 167, 0.8);
+}
+
+*::-webkit-scrollbar-thumb:active {
+    background-color: var(--background-button);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: var(--background-button);
+}
+
+*::-webkit-scrollbar-track {
+    background: #404040;
+}
+
+*::-webkit-scrollbar-track:hover,
+*::-webkit-scrollbar-track:active {
+    background: #404040;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #8C8C8C; 
+    border-radius: 3px;
 }

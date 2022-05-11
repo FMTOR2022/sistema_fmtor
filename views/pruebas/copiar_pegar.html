@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copiar y pegar</title>
+</head>
+<body>
+    <input type="text" name="texto" id="texto">
+    <input type="text" name="texto_2" id="texto_2">
+    <button id="copiar">Copiar</button>
+    <button id="pegar">Pegar</button>
+    <script>
+        const input = document.getElementById('texto')
+        const input_2 = document.getElementById('texto_2')
+        const btn_copiar = document.getElementById('copiar')
+        const btn_pegar = document.getElementById('pegar')
+
+        btn_copiar.addEventListener('click', () => {
+            navigator.clipboard.writeText(input.value).then(function () {
+                alert('Contenido copiado')
+                console.log('bien');
+            }, function () {
+                alert('Contenido no copiado')
+                console.log('mal');
+            });
+        })
+
+        btn_pegar.addEventListener('click', () => {
+            navigator.clipboard.readText().then(
+                clipText => input_2.value = clipText);
+        })
+
+    </script>
+</body>
+</html>

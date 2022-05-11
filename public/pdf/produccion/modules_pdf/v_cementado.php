@@ -1,13 +1,14 @@
 <table>
     <thead>
         <tr>
-            <th colspan="5" class="th-estado">CEMENTADO</th>
+            <th colspan="3" class="th-estado">CEMENTADO</th>
+            <th colspan="2" class="txt-left">Factor: <?php echo $data['factores'][4]['factor'];?></th>
         </tr>
         <tr>
-            <th>Botes</th>
+            <th>Bote</th>
             <th>Fecha</th>
             <th>Pzas.</th>
-            <th>Pzas. Acumuladas</th>
+            <th width="50px">Pzas. Acumuladas</th>
             <th>K.g.</th>
         </tr>
     </thead>
@@ -44,7 +45,7 @@
 
                     $kilo += $data['cementado'][$i]['kilos'];
                     $pza += $data['cementado'][$i]['pzas'];
-                    $bote += $data['cementado'][$i]['botes'];
+                    $bote += $data['cementado'][$i]['bote'];
 
                     $fecha = $data['cementado'][$i]['fecha'];
                 } else{
@@ -52,7 +53,7 @@
                     $fecha = $data['cementado'][$i]['fecha'];
                     $kilo += $data['cementado'][$i]['kilos'];
                     $pza += $data['cemnentado'][$i]['pzas'];
-                    $bote += $data['cementado'][$i]['botes'];
+                    $bote += $data['cementado'][$i]['bote'];
 
                         if(($i+1) == count($data['cementado'])){
                             $kilos[] = $kilo;
@@ -77,6 +78,16 @@
                         '</tr>';
                 
                 echo $fila;      
+            }
+
+            for ($i=count($fechas); $i < 11; $i++) { 
+                echo '<tr>'.
+                        '<td style="height: 10px;"></td>'.
+                        '<td style="height: 10px;"></td>'.
+                        '<td style="height: 10px;"></td>'.
+                        '<td style="height: 10px;"></td>'.
+                        '<td style="height: 10px;"></td>'.
+                    '<tr>';
             }
             ?>
     </tbody>

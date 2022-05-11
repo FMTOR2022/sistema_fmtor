@@ -33,3 +33,25 @@
 
     --login: rgba(9, 96, 167, 0.8);
 }
+
+*::-webkit-scrollbar-thumb:active {
+    background-color: var(--background-button);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: var(--background-button);
+}
+
+*::-webkit-scrollbar-track {
+    background: #F2F2F2;
+}
+
+*::-webkit-scrollbar-track:hover,
+*::-webkit-scrollbar-track:active {
+    background: #F2F2F2;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #A6A6A6; 
+    border-radius: 3px;
+}

@@ -16,7 +16,7 @@ const iniciar_sesion = () => {
         const respuesta = fetchAPI(form,url+'/main/iniciar','POST');
         respuesta.then(json => {
             if (json.depto) {
-                window.location.href = url+'/'+json.depto.toLowerCase()+'/main/mostrar'
+                window.location.href = url+'/usuario/principal'
             } else {
                 auxiliar.intentos++
                 if (json == 0) {

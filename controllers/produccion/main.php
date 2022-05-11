@@ -10,23 +10,27 @@
         }
 
         public function mostrar () {
-            $this->web->View('produccion/main','');
+            header('Location: http://localhost/sistema_fmtor/usuario/principal');
         }
         
         public function control () {
-            $this->web->View('produccion/control','');
+            header('Location: http://localhost/sistema_fmtor/usuario/control');
+        }
+        
+        public function diario () {
+            header('Location: http://localhost/sistema_fmtor/usuario/diario');
         }
         
         public function ordenes () {
-            $this->web->View('produccion/ordenes','');
+            header('Location: http://localhost/sistema_fmtor/usuario/ordenes');
         }
 
         public function estados () {
-            $this->web->View('produccion/estado','');
+            header('Location: http://localhost/sistema_fmtor/usuario/estados');
         }
         
         public function maquinas () {
-            $this->web->View('produccion/maquinas','');
+            header('Location: http://localhost/sistema_fmtor/usuario/maquinas');
         }
     }
 ?>

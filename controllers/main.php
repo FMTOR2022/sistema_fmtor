@@ -17,7 +17,11 @@
 
         public function cerrar_sesion () {
             $result = $this->model->cerrar_sesion();
-            echo $result;
+            if ($result == 1) {
+                header("Location: http://localhost/sistema_fmtor/");
+            } else {
+                return 0;
+            }
         }
 
         public function iniciar () {
@@ -26,49 +30,25 @@
                     $nombre = $_POST['nombre'];
                     $password = $_POST['password'];
                     
-                    $status = self::comprobar_estado($nombre);
-                    if ($status == 1) {
-                        $validar_existencia_usuario = self::usuario_existe($nombre);
-                        if ($validar_existencia_usuario == 1) {
-                            $valiacion_contrasena = self::validar_contrasena($nombre,$password);
-                            if ($valiacion_contrasena > 0) {
-                                $this->model = new Model();
-                                $act_status = $this->model->actualizar('t_usuario', "estatus = 'activo'", "usuario = '".$nombre."'");
-                                $this->model = new Model();
-                                $informacion = $this->model->buscar('v_login','usuario',$nombre);
-                                
-                                $sesiones = self::generar_sesiones($informacion[0]['id_empleados'],$informacion[0]['nombre_completo'],$informacion[0]['nombreRol'],$informacion[0]['nombre_departamento'],$informacion[0]['foto'],$informacion[0]['nombrePuesto']);
-                                echo json_encode($sesiones);
-                            } else {
-                                echo 3;
-                            }
+                    $validar_existencia_usuario = self::usuario_existe($nombre);
+                    if ($validar_existencia_usuario == 1) {
+                        $valiacion_contrasena = self::validar_contrasena($nombre,$password);
+                        if ($valiacion_contrasena > 0) {
+                            $this->model = new Model();
+                            $informacion = $this->model->buscar('v_login','usuario',$nombre);
+                            
+                            $sesiones = self::generar_sesiones($informacion[0]['id_empleados'],$informacion[0]['nombre_completo'],$informacion[0]['nombreRol'],$informacion[0]['nombre_departamento'],$informacion[0]['foto'],$informacion[0]['nombrePuesto']);
+                            echo json_encode($sesiones);
                         } else {
-                            echo 2;
+                            echo 3;
                         }
                     } else {
-                        if ($status == 0) {
-                            echo 5;
-                        } else {
-                            echo 4;
-                        }
+                        echo 2;
                     }
                 } else {
                     echo 0;
                 }
             } 
-        }
-
-        public function comprobar_estado ($nombre) {
-            $estado = $this->model->buscar_personalizado('t_usuario','estatus',"usuario = '".$nombre."'");
-            if(count($estado) > 0) {
-                if ($estado[0]['estatus'] == 'inactivo') {
-                    return 1;
-                } else {
-                    return 2;
-                }
-            } else {
-                return 0;
-            }
         }
 
         public function usuario_existe ($nombre) {

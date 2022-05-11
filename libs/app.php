@@ -1,7 +1,7 @@
 <?php 
-    session_set_cookie_params(60*60*24*16);
+    session_set_cookie_params(60*60*24*15);
     session_start();
-
+    
     class App {
         public function __construct() {
             require_once 'controllers/error.php';
@@ -39,6 +39,8 @@
                     } else {
                         $error->error_404($url_div);
                     }
+                } else if (count($url) < 2) {
+                    $error->error_404($url_div);
                 } else {
                     $error->error_404($url_div);
                 }

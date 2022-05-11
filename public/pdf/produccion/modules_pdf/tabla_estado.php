@@ -12,6 +12,20 @@
     $aux_contador = 0;
     $mes = '';
     $fecha = '';
+    $meses_texto = [
+        'ENE',
+        'FEB',
+        'MAR',
+        'ABR',
+        'MAY',
+        'JUN',
+        'JUL',
+        'AGO',
+        'SEP',
+        'OCT',
+        'NOV',
+        'DIC'
+    ];
 
     if (count($data) > 0) {
         $fecha_hora = explode(' ',$data[0]['Fecha']);
@@ -53,7 +67,7 @@
                 $aux_semanas[] = $meses[$i][0].'-'.$meses[$i][1].'-'.$j;
             }
             
-            if ($dia == 'Sunday') {
+            if ($dia == 'Sunday' && count($aux_semanas) > 1) {
                 $rango_semanas[] = $aux_semanas;
                 $aux_semanas = array();
                 $aux_semanas[] = $meses[$i][0].'-'.$meses[$i][1].'-'.$j;
@@ -99,35 +113,49 @@
 
     $tablas[] = $aux_tablas;
 
-    echo '<tr><td class="txt-center th-estado" colspan="7">RETRASOS</td></tr>';
-    echo '<tr>';
-    for ($i=0; $i < count($retrasos); $i++) {
-            echo '<td>'.$retrasos[$i]['Id_Folio'].'</td>';
-            echo '<td>'.$retrasos[$i]['Clientes'].'</td>';
-            echo '<td>'.$retrasos[$i]['descripcion'].'</td>';
-            echo '<td>'.$retrasos[$i]['cantidad_elaborar'].'</td>';
-            echo '<td>'.$retrasos[$i]['precio_millar'].'</td>';
-            echo '<td class="txt-right">'.number_format($retrasos[$i]['TOTAL'],2).'</td>';
-            echo '<td>'.$retrasos[$i]['estado_general'].'</td>';
-        echo '</tr>';
-    }
-
-    for ($i=0; $i < count($tablas); $i++) {
-        echo '<tr><td class="txt-center" colspan="7"></td></tr>';
-        for ($l=0; $l < count($rango_tablas[$i]); $l++) {
-            echo '<tr><td class="txt-center th-estado" colspan="7">'.$rango_tablas[$i][$l][0].'  -  '.$rango_tablas[$i][$l][1].'</td></tr>';
-        }
-        echo '<tr><td class="txt-center" colspan="7"></td></tr>';
-        for ($j=0; $j < count($tablas[$i]); $j++) { 
-            echo '<tr>';
-                echo '<td>'.$tablas[$i][$j]['Id_Folio'].'</td>';
-                echo '<td>'.$tablas[$i][$j]['Clientes'].'</td>';
-                echo '<td>'.$tablas[$i][$j]['descripcion'].'</td>';
-                echo '<td>'.$tablas[$i][$j]['cantidad_elaborar'].'</td>';
-                echo '<td>'.$tablas[$i][$j]['precio_millar'].'</td>';
-                echo '<td class="txt-right">'.number_format($tablas[$i][$j]['TOTAL'],2).'</td>';
-                echo '<td>'.$tablas[$i][$j]['estado_general'].'</td>';
+    if (count($retrasos) > 0) {
+        echo '<tr><td class="txt-center th-estado" colspan="9">RETRASOS</td></tr>';
+        echo '<tr>';
+        for ($i=0; $i < count($retrasos); $i++) {
+                echo '<td>'.$retrasos[$i]['Id_Folio'].'</td>';
+                echo '<td>'.$retrasos[$i]['Clientes'].'</td>';
+                echo '<td>'.$retrasos[$i]['descripcion'].'</td>';
+                echo '<td>'.$retrasos[$i]['tratamiento'].'</td>';
+                echo '<td>'.$retrasos[$i]['material'].'</td>';
+                echo '<td>'.$retrasos[$i]['cantidad_elaborar'].'</td>';
+                echo '<td>'.$retrasos[$i]['precio_millar'].'</td>';
+                echo '<td class="txt-right">'.number_format($retrasos[$i]['TOTAL'],2).'</td>';
+                echo '<td>'.$retrasos[$i]['estado_general'].'</td>';
             echo '</tr>';
         }
     }
+
+    if (count($tablas) > 0) {
+        for ($i=0; $i < count($tablas); $i++) {
+            $numero_semana = 1;
+            echo '<tr><td class="txt-center" colspan="9"></td></tr>';
+            for ($l=0; $l < count($rango_tablas[$i]); $l++) {
+                $semana_a = explode('-', $rango_tablas[$i][$l][0])[0].' / '.$meses_texto[Intval(explode('-',$rango_tablas[$i][$l][0])[1])].' / '. explode('-', $rango_tablas[$i][$l][0])[2];
+                $semana_b = explode('-', $rango_tablas[$i][$l][1])[0].' / '.$meses_texto[Intval(explode('-',$rango_tablas[$i][$l][1])[1])].' / '. explode('-', $rango_tablas[$i][$l][1])[2];
+                echo '<tr><td class="txt-center th-estado" colspan="2">SEM. '.$numero_semana.'</td>';
+                echo '<td class="txt-center th-estado" colspan="7">'.$semana_a.'  -  '.$semana_b.'</td></tr>';
+                $numero_semana += 2;
+            }
+            echo '<tr><td class="txt-center" colspan="9"></td></tr>';
+            for ($j=0; $j < count($tablas[$i]); $j++) { 
+                echo '<tr>';
+                    echo '<td>'.$tablas[$i][$j]['Id_Folio'].'</td>';
+                    echo '<td>'.$tablas[$i][$j]['Clientes'].'</td>';
+                    echo '<td>'.$tablas[$i][$j]['descripcion'].'</td>';
+                    echo '<td>'.$tablas[$i][$j]['tratamiento'].'</td>';
+                    echo '<td>'.$tablas[$i][$j]['material'].'</td>';
+                    echo '<td>'.$tablas[$i][$j]['cantidad_elaborar'].'</td>';
+                    echo '<td>'.$tablas[$i][$j]['precio_millar'].'</td>';
+                    echo '<td class="txt-right">'.number_format($tablas[$i][$j]['TOTAL'],2).'</td>';
+                    echo '<td>'.$tablas[$i][$j]['estado_general'].'</td>';
+                echo '</tr>';
+            }
+        }
+    }
+
 ?>

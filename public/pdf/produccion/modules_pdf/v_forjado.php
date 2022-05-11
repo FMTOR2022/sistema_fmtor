@@ -1,13 +1,14 @@
 <table>
     <thead>
         <tr>
-            <th colspan="5" class="th-estado">FORJADO</th>
+            <th colspan="3" class="th-estado">FORJADO</th>
+            <th colspan="2" class="txt-left">Factor: <?php echo $data['factores'][0]['factor']; ?></th>
         </tr>
         <tr>
-            <th>Botes</th>
+            <th>Bote</th>
             <th>Fecha</th>
             <th>Pzas.</th>
-            <th>Pzas. Acumuladas</th>
+            <th width="50px">Pzas. Acumuladas</th>
             <th>K.g.</th>
         </tr>
     </thead>
@@ -42,14 +43,14 @@
 
                 $kilo += $data['forjado'][$i]['kilos'];
                 $pza += $data['forjado'][$i]['pzas'];
-                $bote += $data['forjado'][$i]['botes'];
+                $bote += $data['forjado'][$i]['bote'];
 
                 $fecha = $data['forjado'][$i]['fecha'];
             } else {
                 $fecha = $data['forjado'][$i]['fecha'];
                 $kilo += $data['forjado'][$i]['kilos'];
                 $pza += $data['forjado'][$i]['pzas'];
-                $bote += $data['forjado'][$i]['botes'];
+                $bote += $data['forjado'][$i]['bote'];
 
                 if (($i + 1) == count($data['forjado'])) {
                     $kilos[] = $kilo;
@@ -65,13 +66,23 @@
 
         for ($i = 0; $i < count($fechas); $i++) {
             $fila = '<tr>' .
-                        '<td class="txt-right">' . $botes[$i] . '</td>' .
-                        '<td>' . $fechas[$i] . '</td>' .
-                        '<td class="txt-right">' . $pzas[$i] . '</td>' .
-                        '<td class="txt-right">' . $total_pzas[$i] . '</td>' .
-                        '<td class="txt-right">' . $kilos[$i] . '</td>' .
-                    '</tr>';
+                '<td class="txt-right">' . $botes[$i] . '</td>' .
+                '<td>' . $fechas[$i] . '</td>' .
+                '<td class="txt-right">' . $pzas[$i] . '</td>' .
+                '<td class="txt-right">' . $total_pzas[$i] . '</td>' .
+                '<td class="txt-right">' . $kilos[$i] . '</td>' .
+                '</tr>';
             echo $fila;
+        }
+
+        for ($i = count($fechas); $i < 11; $i++) {
+            echo '<tr>' .
+                '<td style="height: 10px;"></td>' .
+                '<td style="height: 10px;"></td>' .
+                '<td style="height: 10px;"></td>' .
+                '<td style="height: 10px;"></td>' .
+                '<td style="height: 10px;"></td>' .
+                '<tr>';
         }
         ?>
     </tbody>

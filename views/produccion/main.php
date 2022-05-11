@@ -1,4 +1,8 @@
-<?php require_once 'public/modules/sesion_depto.php'; ?>
+<?php 
+    if ($_SESSION['ZGVwdG8='] != 'Produccion' && $_SESSION['cm9s'] != 'SuperUsuario') {
+        header('Location: ' . $this->url_server . '/usuario/principal');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,6 +58,13 @@
                             <div class="d-grid g-1">
                                 <i class="material-icons-outlined icon">supervisor_account</i>
                                 <span class="material-icons-outlined icon">supervisor_account</span>
+                                <p>CONTROL DE PRODUCCIÓN</p>
+                            </div>
+                        </a>
+                        <a class="btn btn-transparent" href="http://localhost/sistema_fmtor/produccion/main/diario">
+                            <div class="d-grid g-1">
+                                <i class="material-icons-outlined icon">today</i>
+                                <span class="material-icons-outlined icon">today</span>
                                 <p>REGISTRO DIARIO DE PRODUCCIÓN</p>
                             </div>
                         </a>

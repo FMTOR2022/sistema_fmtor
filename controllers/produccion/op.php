@@ -59,8 +59,20 @@
         public function terminar () {
             if (isset($_GET['orden']) && $_GET['orden'] != '') {
                 $orden = $_GET['orden'];
-                $actualizar = $this->model->actualizar('t_control_produccion',"estado_general = 'TERMINADO'", "id_control_produccion = '".$orden."'");
+                $actualizar = $this->model->actualizar('t_orden_produccion',"estado_general = 'TERMINADO'", "Id_Produccion = '".$orden."'");
                 echo json_encode($actualizar);
+            } else {
+                echo 0;
+            }
+        }
+
+        public function actualizar_calibre () {
+            if (isset($_POST['calibre']) && isset($_POST['calibre_op'])) {
+                $this->model_op->setOp($_POST['calibre_op']);
+                $this->model_op->setCalibre($_POST['calibre']);
+
+                $result = $this->model_op->calibre();
+                echo json_encode($result);
             } else {
                 echo 0;
             }
@@ -156,7 +168,7 @@
         public function buscar_mes(){
             if(isset($_POST['buscar_por'])){
                 if(isset($_POST['f_fecha_mes'])){
-                    $value ='-'.$_POST['f_fecha_mes'].'-';
+                    $value = $_POST['f_fecha_mes'].'-';
                     
                     $this->model_op->setVista($_POST['tabla']);
                     $this->model_op->setCampo('fecha');
@@ -212,5 +224,57 @@
                     echo $json;
                 }
             }
+        }
+
+        public function obtener_programa () {
+            $result = $this->model->mostrar('v_programa_forjado');
+            echo json_encode($result);
+        }
+
+        public function insertar_programa () {
+            if (isset($_POST['op']) && isset($_POST['fecha_entrega']) && isset($_POST['herramental']) && isset($_POST['no_maquina'])) {
+                $tabla = 't_programa_forjado';
+                $campos = 'Id_Produccion_FK,Fecha_entrega,herramental,no_maquina,producto_desc';
+                $valores = "'".$_POST['op']."','".$_POST['fecha_entrega']."','".$_POST['herramental']."','".$_POST['no_maquina']."','".$_POST['estado_produccion']."'";
+                $result = $this->model->insertar($tabla,$campos,$valores);
+                echo json_encode($result);
+            } else {
+                echo 0;
+            }
+        }
+
+        public function editar_programa () {
+            if (isset($_POST['op_a']) && isset($_POST['fecha_entrega_a']) && isset($_POST['herramental_a']) && isset($_POST['no_maquina_a'])) {
+                $tabla = 't_programa_forjado';
+                $valores = "Id_Produccion_FK='".$_POST['op_a']."',Fecha_entrega='".$_POST['fecha_entrega_a']."',herramental='".$_POST['herramental_a']."', no_maquina='".$_POST['no_maquina_a']."',producto_desc='".$_POST['estado_produccion_a']."'";
+                $condicion = "Id_Programa_Forjado = '".$_POST['registro']."'";
+                $result = $this->model->actualizar($tabla,$valores,$condicion);
+                echo json_encode($result);
+            } else {
+                echo 0;
+            }
+        }
+
+        public function obtener_registro () {
+            if (isset($_GET['id'])) {
+                $result = $this->model->buscar('v_programa_forjado','Id_Programa_Forjado',$_GET['id']);
+                echo json_encode($result);
+            } else { 
+                echo 0;
+            }   
+        }
+
+        public function eliminar_programa () {
+            if (isset($_GET['id'])) {
+                $result = $this->model->eliminar('t_programa_forjado',"Id_Programa_Forjado = '".$_GET['id']."'");
+                echo json_encode($result);
+            } else {
+                echo 0;
+            }
+        }
+
+        public function pdf_programa_forjado () {
+            $data = $this->model->mostrar('v_programa_forjado');
+            $this->web->PDF('produccion/programa_forjado',$data);
         }
    }

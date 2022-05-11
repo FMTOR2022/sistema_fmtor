@@ -1,7 +1,7 @@
 @media (prefers-color-scheme: dark) {
     :root {
-        --background-body: #212121;
-        --background-aux: #2B2B2B;
+        --background-body: #15141A;
+        --background-aux: rgb(35, 34, 42);
         --background-aux-05: rgba(37, 39, 41, 0.5);
         --background-button:#5AB3F0;
 
@@ -26,21 +26,43 @@
         --color-green-hover: #212325;
 
         --color-button: #02203A;
-        --color-text: #FFFFFF;
+        --color-text: #e8eaed;
         
-        --color-logo: #FFFFFF;
+        --color-logo: #e8eaed;
 
         --border-color: #36393f;
 
         --login: rgba(9, 96, 167, 0.8);
+    }
+
+    *::-webkit-scrollbar-thumb:active {
+        background-color: var(--background-button);
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+        background-color: var(--background-button);
+    }
+
+    *::-webkit-scrollbar-track {
+        background: var(--background-body);
+    }
+
+    *::-webkit-scrollbar-track:hover,
+    *::-webkit-scrollbar-track:active {
+        background: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background: var(--border-color); 
+        border-radius: 3px;
     }
 }
 
 @media (prefers-color-scheme: light) {
     :root {
         --background-body: #FFFFFF;
-        --background-aux: #F1F5FB;
-        --background-aux-05: rgba(241, 245, 251,0.5);
+        --background-aux: rgb(248, 249, 250);
+        --background-aux-05: rgba(34, 34, 34, 0.5);
         --background-button:#C2E7FF;
 
         --background-red-main: #B3261E;
@@ -71,5 +93,27 @@
         --border-color: #EFEFEF;
 
         --login: rgba(9, 96, 167, 0.8);
+    }
+
+    *::-webkit-scrollbar-thumb:active {
+        background-color: var(--background-button);
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+        background-color: var(--background-button);
+    }
+
+    *::-webkit-scrollbar-track {
+        background: #F2F2F2;
+    }
+
+    *::-webkit-scrollbar-track:hover,
+    *::-webkit-scrollbar-track:active {
+        background: #F2F2F2;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background: #bebebe; 
+        border-radius: 3px;
     }
 }

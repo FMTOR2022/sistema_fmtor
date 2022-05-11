@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #cursor {
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        top: 40px;
+        left: 40px;
+        border-radius: 20%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+    }
+
+    #cursor::after {
+        position: absolute;
+        content: '';
+        height: 60px;
+        width: 60px;
+        top: -20px;
+        left: -20px;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+</style>
+<body>
+    <div id="cursor"></div>
+    <input type="text" name="pos_1" id="pos_1">
+    <input type="text" name="pos_2" id="pos_2">
+    <script>
+        const cursor_m = document.getElementById('cursor')
+        
+        function mousemove (event) {
+            // console.log("pageX: ",event.pageX, 
+            // "pageY: ", event.pageY, 
+            // "clientX: ", event.clientX, 
+            // "clientY:", event.clientY)
+            document.getElementById('pos_1').value = event.pageX
+            document.getElementById('pos_2').value = event.pageY
+            cursor_m.style.left = (event.pageX - 10) + 'px'
+            cursor_m.style.top = (event.pageY - 10) + 'px'
+            cursor_m.style.transform = 'rotate(45deg)'
+        }
+
+        window.addEventListener('mousemove', mousemove);
+
+        document.addEventListener('click', (evt) => {
+            if (!document.getElementById('cursor')) {
+                document.body.innerHTML += '<div id="cursor"></div>'
+            }
+        })
+    </script>
+</body>
+</html>

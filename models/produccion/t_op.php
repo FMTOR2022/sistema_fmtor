@@ -3,6 +3,7 @@
     
     class t_op extends Model {
         public $op;
+        public $calibre;
         public $op_fin;
         public $fecha;
         public $fecha_fin;
@@ -19,6 +20,10 @@
 
         public function setOp($op) : void {
             $this->op = $op;
+        }
+
+        public function setCalibre($calibre) : void {
+            $this->calibre = $calibre;
         }
         
         public function setOpFin($op_fin) : void {
@@ -59,6 +64,11 @@
 
         public function obtener_informacion () {
             $result = Model::mostrar($this->vista);
+            return $result;
+        }
+
+        public function calibre () {
+            $result = Model::actualizar('t_orden_produccion',"calibre = '$this->calibre'","Id_Produccion = '$this->op'");
             return $result;
         }
 

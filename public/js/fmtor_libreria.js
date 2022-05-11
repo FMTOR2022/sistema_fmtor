@@ -1,5 +1,6 @@
 let resJSON = ''
 let resBLOB 
+let alerts = 1
 const url = 'http://localhost/sistema_fmtor'
 const btn_menu_toggle = document.getElementById('btn-menu-toggle')
 const menu = document.getElementById('menu')
@@ -129,7 +130,7 @@ const fetchAPI = async (form,ruta,metodo) => {
 
 // Alertas
 
-const time_notification = (div,not) => {
+const time_notification = (div,not,alert) => {
     window.setTimeout(() => {
         not.classList.add('show-alert');
     },300);
@@ -137,18 +138,30 @@ const time_notification = (div,not) => {
         not.classList.remove('show-alert');
     },5000);
     window.setTimeout(() => {
-        div.removeChild(not);
+        if (document.getElementById('alert-'+alert)) {
+            div.removeChild(document.getElementById("alert-" + alert));
+        }
         const cantidad = div.getElementsByClassName('contenido')
-        if (cantidad.length == 0) {
-            div.classList.remove('show-alert')
-            document.body.removeChild(div)
+        if (cantidad.length == 0 && document.getElementById('contenedor_alert')) {
+            document.body.removeChild(document.getElementById('contenedor_alert'))
         }
     },5800);
+}
+
+const remove_alert = (id_alert) => {
+    const contenedor = document.getElementById("contenedor_alert");
+    const alert = document.getElementById('alert-'+(id_alert))
+    contenedor.removeChild(alert)
+    const cantidad = contenedor.getElementsByClassName("contenido");
+    if (cantidad.length == 0) {
+        document.body.removeChild(contenedor)
+    }
 }
 
 const open_alert = (titulo,color) => {  
     if (document.getElementById('contenedor_alert')) {
         const contenedor = document.getElementById('contenedor_alert')
+        const cantidad = contenedor.getElementsByClassName('contenido')
         const contenido = document.createElement('div')
         let icono = 'info'
     
@@ -166,15 +179,20 @@ const open_alert = (titulo,color) => {
     
         contenido.classList.add('contenido')
         contenido.classList.add('d-flex')
+        contenido.classList.add("alert-" + color);
         contenido.classList.add('align-content-center')
+        contenido.setAttribute("id", "alert-"+(alerts));
         contenido.innerHTML += '<i class="material-icons">'+icono+'</i>'+
-                                '<p class="txt-left">'+titulo+'</p>'
+                                '<p class="txt-left">'+titulo+'</p>'+
+                            '<label class="material-icons" data-alert="'+(alerts)+'">close</label>';
     
         contenedor.appendChild(contenido)
         document.body.appendChild(contenedor);
 
-        time_notification(contenedor,contenido)
+        time_notification(contenedor,contenido,alerts)
+        alerts++
     } else {
+        alerts = 1
         const div = document.createElement('div')
         const contenido = document.createElement('div')
         let icono = 'info'
@@ -187,7 +205,6 @@ const open_alert = (titulo,color) => {
         div.classList.add('flex-column')
         div.classList.add('align-content-top')
         div.classList.add('flex-nowrap')
-        div.classList.add('alert-'+color)
 
         if (color == 'rojo') {
             icono = 'warning';
@@ -197,20 +214,26 @@ const open_alert = (titulo,color) => {
             icono = 'info';
         } else if (color == 'naranja') {
             icono = 'feedback';
+        } else if (color == 'linea') {
+            icono = "wifi";
         } else {
             icono = 'info';
         }
     
         contenido.classList.add('contenido');
+        contenido.classList.add("alert-" + color);
         contenido.classList.add('d-flex');
         contenido.classList.add('align-content-center');
+        contenido.setAttribute("id", "alert-1");
         contenido.innerHTML = '<i class="material-icons">'+icono+'</i>'+
-                                '<p class="txt-left">'+titulo+'</p>';
+                                '<p class="txt-left">'+titulo+'</p>'+
+                            '<label class="material-icons" data-alert="1">close</label>';
                                 
         div.appendChild(contenido)
         document.body.appendChild(div);
 
-        time_notification(div,contenido)
+        time_notification(div,contenido,alerts)
+        alerts++
     }
 
 }
@@ -276,7 +299,6 @@ document.addEventListener('click', (evt) => {
         abrir_cerrar_menu()
     } else if (evt.target.matches('.btn-confirm-sm-accept')) {
         const not = document.getElementsByClassName('confirm')
-        console.log('l');
         sharedFunction();
         window.setTimeout(() => {
             not[0].classList.remove('show-alert')
@@ -297,6 +319,18 @@ document.addEventListener('click', (evt) => {
         abrir_modal(evt.target.dataset.modal)
     } else if (evt.target.dataset.acordeon) {
         acordeon(evt.target.dataset.acordeon)
+    } else if (evt.target.dataset.alert) {
+        remove_alert(evt.target.dataset.alert);
+    } else if (evt.target.dataset.opciones) {
+        const contenedor = document.getElementById(evt.target.dataset.opciones) 
+        const contenedor_opciones = document.getElementById('opciones-'+evt.target.dataset.opciones) 
+        contenedor.classList.toggle('mostrar-opciones')
+        if (contenedor.classList.contains('mostrar-opciones')) {
+            const cantidad = contenedor_opciones.getElementsByTagName('button')
+            contenedor_opciones.style.width = (60 * cantidad.length) + 'px';
+        } else { 
+            contenedor_opciones.style.width = '0px';
+        }
     }
 });
 
@@ -372,10 +406,49 @@ if (document.getElementById('cerrar-sesion')) {
 if (document.getElementById('btn-toggle-iniciar')) {
     const btn_abrir_form = document.getElementById('btn-toggle-iniciar');
     btn_abrir_form.addEventListener('click', () => {
-        alert('Clickeado')
         const empresa = document.getElementsByClassName('empresa')
         empresa[0].classList.add('quitar_empresa')
         const form_login = document.getElementsByClassName('f-login')
         form_login[0].classList.add('aparecer')
     });
 }
+
+const validar = (data) => {
+    let auxiliar = true;
+    const keys = Object.keys(data);
+
+    keys.forEach(el => {
+        document.getElementById(el).classList.remove("input-error");
+        if (document.getElementById(el).value == "") {
+            document.getElementById(el).classList.add("input-error");
+            auxiliar = false;
+        }
+    })
+    
+    if (!auxiliar) {
+        open_alert('Debes introducir correctamente los campos','rojo')
+    }
+    
+    return auxiliar;
+}
+
+const limpiar_form = (form) => {
+    const data = Object.fromEntries(new FormData(form));
+    let auxiliar = true;
+    const keys = Object.keys(data);
+
+    keys.forEach(el => {
+        document.getElementById(el).value = '';
+    })
+    
+    return auxiliar;
+}
+
+// console.log('%c¡ADVENTENCIA!','color:red;font-size: 4em;')
+// console.log('%cEste sitio se encuentra protegido y cualquier intento de acceso indebido, será registrado y reportado a las autoridades','color:white;font-size: 2em;')
+
+const darky = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const ligth = window.matchMedia('(prefers-color-scheme: ligth)').matches;
+const themeColor = document.querySelector('meta[name=theme-color]');
+if (darky) { themeColor.setAttribute('content','#15141A') };
+if (ligth) { themeColor.setAttribute('content','#FFFFFF') };

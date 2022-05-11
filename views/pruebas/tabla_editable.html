@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    th, td {
+        padding: 10px;
+    }
+</style>
+<body>
+    <!-- <textarea name="" id="pegar" cols="30" rows="10"></textarea> -->
+    <button id="btn_pegar">pegar</button>
+    <table>
+        <thead>
+            <th>item-1</th>
+            <th>item-2</th>
+            <th>item-3</th>
+        </thead>
+        <tbody id="body">
+        </tbody>
+    </table>
+    <script>
+        const texto = 'Company	Contact	Country \n' +
+                    'Alfreds Futterkiste	Maria Anders	Germany\n' +
+                    'Centro comercial Moctezuma	Francisco Chang	Mexico\n' +
+                    'Ernst Handel	Roland Mendel   Austria\n' +
+                    'Island Trading	Helen Bennett	UK\n' +
+                    'Laughing Bacchus Winecellars	Yoshi Tannamuri	Canada\n' +
+                    'Magazzini Alimentari Riuniti	Giovanni Rovelli	Italy\n'
+
+        const dividir = (texto) => {
+            const body = document.getElementById('body')
+            body.innerHTML = ''
+            const texto_filas = texto.split('\n');
+            for (let i = 0; i < texto_filas.length; i++) {
+                const texto_celdas = texto_filas[i].split('\t');
+                body.innerHTML += '<tr>'+
+                                    '<td>'+texto_celdas[0]+'</td>'+
+                                    '<td>'+texto_celdas[1]+'</td>'+
+                                    '<td>'+texto_celdas[2]+'</td>'+
+                                '</tr>';
+                console.log(texto_celdas);
+            }
+        }
+
+        const pegar_texto = () => {
+            navigator.clipboard.readText().then(texto => {
+                dividir(texto);
+            })
+            .catch(err => {
+                console.error('Failed to read clipboard contents: ', err);
+            });
+        }
+
+        const boton = document.getElementById('btn_pegar')
+
+        boton.addEventListener('click', () => {
+            // dividir()
+            pegar_texto()
+        })
+    </script>
+</body>
+</html>

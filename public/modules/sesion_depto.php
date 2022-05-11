@@ -1,7 +1,7 @@
 <?php
 
-    if (!isset($_SESSION['empleado'])) {
-        header('Location: http://localhost/sistema_fmtor/main/login');
+    if (!isset($_SESSION['ZW1wbGVhZG8='])) {
+        header('Location: '. $this->url_server.'/main/login');
     }
 
 ?>

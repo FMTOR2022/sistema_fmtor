@@ -1,74 +1,33 @@
-<div class="menu hidde_menu" id="menu">
-    <div class="informacion">
-        <div class="foto">
-            <img src="data:image/jpg;base64,<?php echo base64_encode($_SESSION['foto'])?>" alt="">
-        </div>
-        <div class="nombre">
-            <p>
-                <?php echo $_SESSION['nombre_usuario']; ?>
-            </p>
-            <p>
-                <?php echo $_SESSION['puesto']; ?>
-            </p>
-        </div>
-    </div>
-    <div class="categoria_menu">
-        <nav class="opciones">
-            <a href="http://localhost/sistema_fmtor/produccion/main/mostrar">
-                <i class="material-icons">apps</i>
-                Menú pricipal
-            </a>
-        </nav>
-        <div class="titulo_categoria_menu">
-            <p>General</p>
-        </div>
-        <nav class="opciones">
-            <a href="http://localhost/sistema_fmtor/produccion/main/ordenes">
-                <i class="material-icons-round">person</i>
-                Información Personal
-            </a>
-            <a href="http://localhost/sistema_fmtor/produccion/main/ordenes">
-                <i class="material-icons-round">person</i>
-                Caja de Ahorro
-            </a>
-            <a href="http://localhost/sistema_fmtor/produccion/main/ordenes">
-                <i class="material-icons-round">person</i>
-                Prestamos
-            </a>
-        </nav>
-        <div class="titulo_categoria_menu">
-            <p>Producción</p>
-        </div>
-        <nav class="opciones">
-            <a href="http://localhost/sistema_fmtor/produccion/main/ordenes">
-                <i class="material-icons-round">engineering</i>
-                Ordenes de Producción
-            </a>
-            <a href="http://localhost/sistema_fmtor/produccion/main/control">
-                <i class="material-icons-round">supervisor_account</i>
-                Registro Diario de Producción
-            </a>
-            <a href="http://localhost/sistema_fmtor/produccion/main/maquinas">
-                <i class="material-icons-round">precision_manufacturing</i>
-                Máquinas de Producción
-            </a>
-            <a href="http://localhost/sistema_fmtor/produccion/main/estados">
-                <i class="material-icons-round">new_releases</i>
-                Estado de las Ordenes de Producción
-            </a>
-        </nav>
-        <div class="titulo_categoria_menu">
-            <p>Ayuda</p>
-        </div>
-        <nav>
-            <a href="">
-                <i class="material-icons-round">help</i>
-                Ayuda
-            </a>
-            <a  id="cerrar-sesion">
-                <i class="material-icons-round">logout</i>
-                Cerrar Sesión
-            </a>
-        </nav>
-    </div>
+<div class="titulo_categoria_menu">
+    <p>Producción</p>
 </div>
+<nav class="opciones">
+    <a class="<?php if ($this->item_menu[1] == 'programa') { echo 'active'; } else { echo ''; }; ?>" href="<?php echo $this->url_server; ?>/usuario/programa">
+        <i class="material-icons-round">format_list_bulleted</i>
+        Programa de Forjado
+    </a>
+    <a class="<?php if ($this->item_menu[1] == 'explosion') { echo 'active'; } else { echo ''; }; ?>" href="<?php echo $this->url_server; ?>/usuario/explosion">
+        <i class="material-icons-round">scale</i>
+        Explosión de Alambre
+    </a>
+    <a class="<?php if ($this->item_menu[1] == 'ordenes') { echo 'active'; } else { echo ''; }; ?>" href="<?php echo $this->url_server; ?>/usuario/ordenes">
+        <i class="material-icons-round">engineering</i>
+        Ordenes de Producción
+    </a>
+    <a class="<?php if ($this->item_menu[1] == 'control') { echo 'active'; } else { echo ''; }; ?>" href="<?php echo $this->url_server; ?>/usuario/control">
+        <i class="material-icons-round">supervisor_account</i>
+        Control de Producción
+    </a>
+    <a class="<?php if ($this->item_menu[1] == 'diario') { echo 'active'; } else { echo ''; }; ?>" href="<?php echo $this->url_server; ?>/usuario/diario">
+        <i class="material-icons-round">today</i>
+        Registro Diario de Producción
+    </a>
+    <a class="<?php if ($this->item_menu[1] == 'maquinas') { echo 'active'; } else { echo ''; }; ?>" href="<?php echo $this->url_server; ?>/usuario/maquinas">
+        <i class="material-icons-round">precision_manufacturing</i>
+        Máquinas de Producción
+    </a>
+    <a class="<?php if ($this->item_menu[1] == 'estado') { echo 'active'; } else { echo ''; }; ?>" href="<?php echo $this->url_server; ?>/usuario/estados">
+        <i class="material-icons-round">new_releases</i>
+        Estado de las Ordenes de Producción
+    </a>
+</nav>

@@ -201,12 +201,16 @@
     }
 
     .formato tfoot .td {
-        height: 25px;
+        height: 40px;
         background-color: transparent;
     }
 
     .formato thead th,
-    .formato tbody td {
+    .formato tbody td,
+    .formato tfoot td,
+    .header thead th,
+    .header tbody td,
+    .header tfoot td {
         border: 1px solid black;
         padding: 3px 3px;
         font-size: 0.7em;
@@ -219,7 +223,11 @@
     }
 
     .formato tbody td table th,
-    .formato tbody td table td {
+    .formato tbody td table td 
+    .formato tfoot td table td,
+    .header tbody th table th,
+    .header tbody td table td,
+    .header tfoot td table td {
         border: 1px solid black;
         font-size: 1em;
     }
@@ -237,7 +245,9 @@
     }
 
     .formato tbody table .th-estado,
-    .formato tbody .th-estado {
+    .formato thead .th-estado,
+    .formato tbody .th-estado,
+    .formato tfoot .th-estado  {
         background-color: rgb(199, 199, 199);
         border: 1px solid black;
     }
